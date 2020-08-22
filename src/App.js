@@ -44,8 +44,10 @@ class App extends Component {
                     </ul>
 
                     <div>
-                        <Route exact path="/" component={LoginView}/>
-                        <Route path="/todo" component={TodoAppView}/>   
+                        {this.state.isLoggedIn
+                            ? <Route path="/todo" component={TodoAppView}/>
+                            : <Route exact path="/" component={LoginView}/>
+                        }
                     </div>
                 </div>
             </Router>
