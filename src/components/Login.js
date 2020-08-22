@@ -12,7 +12,14 @@ import './Login.css'
 
 
 export class Login extends React.Component{
-
+    constructor(props) {
+        super(props);
+        this.state={email:"",password:""};
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChangeEmail=this.handleChangeEmail.bind(this);
+        this.handleChangePassword=this.handleChangePassword.bind(this);
+    }
+    
     render(){
         return (
             <React.Fragment>
@@ -22,11 +29,13 @@ export class Login extends React.Component{
                         <Avatar className="avatar">
                             <LockIcon />
                         </Avatar>
-                        <Typography variant="h2">Sign in</Typography>
+                        <Typography variant="headline">Sign in</Typography>
                         <form className="form">
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input id="email" name="email" autoComplete="email" autoFocus />
+                                <Input id="email" name="email" autoComplete="email" autoFocus
+                                    onChange={this.handleChangeEmail}
+                                    />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="password">Password</InputLabel>
@@ -35,14 +44,17 @@ export class Login extends React.Component{
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
+                                    onChange={this.handleChangePassword}
                                 />
                             </FormControl>
                             <Button
                                 type="submit"
                                 fullWidth
-                                variant="contained"
+                                variant="raised"
                                 color="primary"
                                 className="submit"
+                                onClick={this.handleSubmit}
+
                             >
                                 Sign in
                             </Button>
@@ -53,4 +65,22 @@ export class Login extends React.Component{
         );
     }
 
+    handleSubmit(e) {
+            if(localStorage.getItem('Email')===this.state.email  && localStorage.getItem('Password')===this.state.password ){
+                localStorage.setItem('isLoggedIn', "true");
+            }
+
+    }
+
+    handleChangeEmail(e) {
+        this.setState({
+            email: e.target.value
+        });
+    }
+
+    handleChangePassword(e) {
+        this.setState({
+            password: e.target.value
+        });
+    }
 }

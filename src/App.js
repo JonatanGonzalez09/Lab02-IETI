@@ -5,25 +5,22 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Login } from "./components/Login";
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
 import { TodoApp } from "./TodoApp";
-import { Todo } from './Todo';
 
 const LoginView = () => (
-    <Login/>
-);
+      <Login/>
+  );
 
-const TodoAppView = () => (
-    <TodoApp/>
-);
-
+  const TodoAppView = () => (
+        <TodoApp/>
+    );
+    
 class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isLoggedIn : false
-        }
-        console.log(this.state.isLoggedIn);
-      }
+        localStorage.setItem('Email',"jonatan@mail.com");
+        localStorage.setItem('Password',"1234");
+    }
 
     render() {
 
@@ -39,21 +36,15 @@ class App extends Component {
                     <br/>
 
                     <ul>
-                        <li><Link to="/">Login</Link></li>
-                        <li><Link to="/todo">Todo</Link></li>
-                    </ul>
-
-                    <div>
-                        {this.state.isLoggedIn
-                            ? <Route path="/todo" component={TodoAppView}/>
-                            : <Route exact path="/" component={LoginView}/>
+                        {localStorage.getItem('isLoggedIn')==="true"
+                            ? <li><Link to="/todo">Todo</Link> <Route path="/todo" component={TodoAppView}/></li>
+                            : <li><Link to="/">Login</Link> <Route exact path="/" component={LoginView}/></li>
                         }
-                    </div>
+                    </ul>
                 </div>
             </Router>
         );
     }
-
 }
 
 export default App;
